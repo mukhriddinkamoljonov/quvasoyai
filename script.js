@@ -130,6 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const projectName = document.getElementById('project_name').value;
             const projectDesc = document.getElementById('project_desc').value;
 
+            // Check if phone number is already registered
+            const registeredPhone = localStorage.getItem('registeredPhone');
+            if (registeredPhone === phone) {
+                alert("Diqqat! Bu telefon raqami orqali allaqachon ro'yxatdan o'tilgan.");
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
             // Prepare message text
             const text = `🎉 Yangi Ariza Tushdi!\n\n👨‍💼 Ism: ${fullname}\n📞 Tel: ${phone}\n🚀 Loyiha: ${projectName}\n📝 Tavsif: ${projectDesc}`;
 
@@ -149,6 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
+                    // Save the phone number to prevent duplicate registration
+                    localStorage.setItem('registeredPhone', phone);
+                    
                     successMessage.classList.remove('hide');
                     hackathonForm.reset();
                 } else {
