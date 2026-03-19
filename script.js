@@ -103,6 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const hackathonForm = document.getElementById('hackathonForm');
     const successMessage = document.getElementById('successMessage');
     const closeSuccess = document.getElementById('closeSuccess');
+    
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            // Faqat va faqat raqamlarni qabul qiladi (probel, chiziqcha va harflarni hammasini o'chiradi)
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
 
     // Bularni o'zingizning bot tokeningiz va chat ID gizingiz bilan almashtiring
     const TELEGRAM_BOT_TOKEN = '8214425109:AAGxLWeEPPs9Ts5hEiSc9urAllr9quOmZJw';
@@ -127,7 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Get form values
             const fullname = document.getElementById('fullname').value;
             const phoneValue = document.getElementById('phone').value;
-            const cleanPhone = phoneValue.replace(/\D/g, '');
+            
+            // Faqat raqam ekanligini qat'iy tekshirish
+            if (/[^0-9]/.test(phoneValue)) {
+                alert("Iltimos, faqat raqam kiriting! (Probel, harf yoki boshqa belgilar kiritish mumkin emas)");
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            const cleanPhone = phoneValue;
             
             if (cleanPhone.length !== 9) {
                 alert("Iltimos, telefon raqamini to'liq kiriting (9 ta raqam bo'lishi kerak).");
