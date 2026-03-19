@@ -108,7 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
             // Faqat va faqat raqamlarni qabul qiladi (probel, chiziqcha va harflarni hammasini o'chiradi)
-            this.value = this.value.replace(/[^0-9]/g, '');
+            // hamda 9 ta raqamdan oshib ketsa ortiqchasini yozishga qo'ymay kesib tashlaydi
+            let cleaned = this.value.replace(/[^0-9]/g, '');
+            if (cleaned.length > 9) {
+                cleaned = cleaned.substring(0, 9);
+            }
+            this.value = cleaned;
         });
     }
 
