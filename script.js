@@ -126,7 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Get form values
             const fullname = document.getElementById('fullname').value;
-            const phone = '+998' + document.getElementById('phone').value;
+            const phoneValue = document.getElementById('phone').value;
+            const cleanPhone = phoneValue.replace(/\D/g, '');
+            
+            if (cleanPhone.length !== 9) {
+                alert("Iltimos, telefon raqamini to'liq kiriting (9 ta raqam bo'lishi kerak).");
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            const phone = '+998' + cleanPhone;
             const projectName = document.getElementById('project_name').value;
             const projectDesc = document.getElementById('project_desc').value;
 
